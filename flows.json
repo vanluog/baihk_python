@@ -1,0 +1,177 @@
+[
+    {
+        "id": "5e7f2dca0e4f7507",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "99588dacf340f3b8",
+        "type": "inject",
+        "z": "5e7f2dca0e4f7507",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "44c1974c383804d0"
+            ]
+        ]
+    },
+    {
+        "id": "44c1974c383804d0",
+        "type": "http request",
+        "z": "5e7f2dca0e4f7507",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:8000/top-tracks",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "d9cf52cd2cbe5cd7",
+                "f041a48fe52fa368"
+            ]
+        ]
+    },
+    {
+        "id": "ef2a5ec3e8120970",
+        "type": "MSSQL",
+        "z": "5e7f2dca0e4f7507",
+        "mssqlCN": "a7879ee889aae11e",
+        "name": "",
+        "outField": "payload",
+        "returnType": 0,
+        "throwErrors": 1,
+        "query": "InsertTopTracksIntoTOPBH",
+        "modeOpt": "",
+        "modeOptType": "execute",
+        "queryOpt": "payload",
+        "queryOptType": "editor",
+        "paramsOpt": "",
+        "paramsOptType": "editor",
+        "rows": "rows",
+        "rowsType": "msg",
+        "parseMustache": true,
+        "params": [
+            {
+                "output": false,
+                "name": "Jsondata",
+                "type": "NVarChar",
+                "valueType": "msg",
+                "value": "payload",
+                "options": {
+                    "nullable": true,
+                    "primary": false,
+                    "identity": false,
+                    "readOnly": false
+                }
+            }
+        ],
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "9583f11ffe570db0"
+            ]
+        ]
+    },
+    {
+        "id": "d9cf52cd2cbe5cd7",
+        "type": "debug",
+        "z": "5e7f2dca0e4f7507",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "9583f11ffe570db0",
+        "type": "debug",
+        "z": "5e7f2dca0e4f7507",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f041a48fe52fa368",
+        "type": "function",
+        "z": "5e7f2dca0e4f7507",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 220,
+        "wires": [
+            [
+                "ef2a5ec3e8120970"
+            ]
+        ]
+    },
+    {
+        "id": "a7879ee889aae11e",
+        "type": "MSSQL-CN",
+        "tdsVersion": "7_4",
+        "name": "LOSTLOVE\\SQLEXPRESS",
+        "server": "127.0.0.1",
+        "port": "1433",
+        "encyption": false,
+        "trustServerCertificate": true,
+        "database": "topmusic",
+        "useUTC": true,
+        "connectTimeout": "15000",
+        "requestTimeout": "15000",
+        "cancelTimeout": "5000",
+        "pool": "5",
+        "parseJSON": false,
+        "enableArithAbort": true,
+        "readOnlyIntent": false
+    }
+]
